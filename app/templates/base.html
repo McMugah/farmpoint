@@ -9,6 +9,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+
     <title>{%block title%} Base {%endblock%}</title>
     <style>
     /* Add your custom CSS styles here */
@@ -58,58 +59,69 @@
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
+    <div class="container">
         <a class="navbar-brand" href="#">Farmers Market</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Products</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Register</a>
-            </li>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('api.get_homepage') }}">Home</a>
+                </li>
+                {% if current_user%}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('api.get_products') }}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('api.get_dashboard')}}">Dashboard</a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-          <a class="nav-link" href="#">Cart</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Checkout</a>
-        </li>
-          </ul>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('api.login') }}">Profile</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="#">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Checkout</a>
+                </li>
+
+                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('api.login') }}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('api.register') }}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('api.login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Checkout</a>
+                </li>
+                {% endif %}
+            </ul>
         </div>
-      </div>
-    </nav>
+    </div>
+</nav>
+
+
 
     <div>{%block content%} {%endblock%}</div>
 
-
+<!--
     <footer>
     {%block footer%}
     <div class="container">
       <p>&copy; 2024 Farmers Market. All rights reserved.</p>
     </div>
     {%endblock%}
-  </footer>
+  </footer> -->
 
   </body>
   <script

@@ -1,82 +1,78 @@
-{%extends "base.html" %} {%block title%} Registration Page {%endblock%} {%block
-content%}
-
+{%extends "base.html" %}
+{%block title%} Registration Page {%endblock%}
+{%block content%}
 <div class="container">
-  <h2>User Registration</h2>
-  <form method="POST" action="{{ url_for('register') }}">
-    <!-- Username -->
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        class="form-control"
-        placeholder="Enter your username"
-        value="{{ form.username.data }}"
-      />
+  <h2 style="color: green;">Enter your details to register</h2>
+  <hr>
+  <form action="{{url_for('api.register')}}" method="POST">
+    {{form.hidden_tag()}}
+    <!-- Display form validation errors if any -->
+    {% for field, errors in form.errors.items() %}
+    <div class="alert alert-danger">
+      <strong>{{ field }}</strong>: {{ ', '.join(errors) }}
     </div>
-    <!-- Email -->
+    {% endfor %}
+    <!-- Username Field -->
     <div class="form-group">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        class="form-control"
-        placeholder="Enter your email address"
-        value="{{ form.email.data }}"
-      />
+      {{form.username.label(style="color: green; font-size: 24px;")}} {{form.username(class="form-control",
+      placeholder="Username")}}
+      {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
     </div>
-    <!-- Password -->
+    <!-- Email Field -->
     <div class="form-group">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        class="form-control"
-        placeholder="Enter your password"
-      />
+      {{form.email.label(style="color: green; font-size: 24px;")}} {{form.email(class="form-control",
+      placeholder="Enter your Email Address")}}
+      {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
     </div>
-    <!-- Confirm Password -->
+    <!-- Password Field -->
     <div class="form-group">
-      <label for="confirm_password">Confirm Password</label>
-      <input
-        type="password"
-        id="confirm_password"
-        name="confirm_password"
-        class="form-control"
-        placeholder="Re-enter your password"
-      />
+      {{form.password.label(style="color: green; font-size: 24px;")}} {{form.password(class="form-control",
+      placeholder="Create a Password")}}
+      {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
     </div>
-    <!-- Contact Number -->
+    <!-- Password Field -->
     <div class="form-group">
-      <label for="contact_number">Contact Number</label>
-      <input
-        type="text"
-        id="contact_number"
-        name="contact_number"
-        class="form-control"
-        placeholder="Enter your contact number"
-        value="{{ form.contact_number.data }}"
-      />
+      {{form.confirm_password.label(style="color: green; font-size: 24px;")}}
+      {{form.confirm_password(class="form-control", placeholder="Confirm Password")}}
+       {% for error in form.confirm_password.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
     </div>
-    <!-- Address -->
+    <!-- Contact Number Field -->
     <div class="form-group">
-      <label for="address">Address</label>
-      <textarea
-        id="address"
-        name="address"
-        class="form-control"
-        placeholder="Enter your address"
-      >
-{{ form.address.data }}</textarea
-      >
+      {{form.contact_number.label(style="color: green; font-size: 24px;")}}
+      {{form.contact_number(class="form-control", placeholder="Enter you Phone Number")}}
+      {% for error in form.contact_number.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
     </div>
-   
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
 
-  {%endblock%}
+    <!-- Address Field -->
+    <div class="form-group">
+      {{form.address.label(style="color: green; font-size: 24px;")}} {{form.address(class="form-control",
+      placeholder="Enter your Address/Location")}}
+      {% for error in form.address.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+    </div>
+
+    <!-- User Role -->
+    <div>
+      {{ form.user_type.label(style="color: green; font-size: 24px;")}} {{ form.user_type }} {% for error in
+      form.user_type.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
+    </div>
+    <br />
+    <!-- Submit Button -->
+    {{form.submit(class="btn btn-primary")}}
+  </form>
 </div>
+<br>
+{%endblock%}

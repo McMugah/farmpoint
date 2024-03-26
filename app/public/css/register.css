@@ -1,0 +1,22 @@
+/* Custom CSS for Registration Form */
+.container {
+    margin-top: 50px; /* Adjust the top margin as needed */
+}
+
+.form-group label {
+    font-weight: bold; /* Make labels bold */
+}
+
+.form-control {
+    border-radius: 5px; /* Add rounded corners to input fields */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Change button background color to Bootstrap's primary color */
+    border-color: #007bff; /* Change button border color to Bootstrap's primary color */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Change button background color on hover */
+    border-color: #0056b3; /* Change button border color on hover */
+}
