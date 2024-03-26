@@ -1,0 +1,82 @@
+{%extends "base.html" %} {%block title%} Registration Page {%endblock%} {%block
+content%}
+
+<div class="container">
+  <h2>User Registration</h2>
+  <form method="POST" action="{{ url_for('register') }}">
+    <!-- Username -->
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        class="form-control"
+        placeholder="Enter your username"
+        value="{{ form.username.data }}"
+      />
+    </div>
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-control"
+        placeholder="Enter your email address"
+        value="{{ form.email.data }}"
+      />
+    </div>
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-control"
+        placeholder="Enter your password"
+      />
+    </div>
+    <!-- Confirm Password -->
+    <div class="form-group">
+      <label for="confirm_password">Confirm Password</label>
+      <input
+        type="password"
+        id="confirm_password"
+        name="confirm_password"
+        class="form-control"
+        placeholder="Re-enter your password"
+      />
+    </div>
+    <!-- Contact Number -->
+    <div class="form-group">
+      <label for="contact_number">Contact Number</label>
+      <input
+        type="text"
+        id="contact_number"
+        name="contact_number"
+        class="form-control"
+        placeholder="Enter your contact number"
+        value="{{ form.contact_number.data }}"
+      />
+    </div>
+    <!-- Address -->
+    <div class="form-group">
+      <label for="address">Address</label>
+      <textarea
+        id="address"
+        name="address"
+        class="form-control"
+        placeholder="Enter your address"
+      >
+{{ form.address.data }}</textarea
+      >
+    </div>
+   
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+
+  {%endblock%}
+</div>
