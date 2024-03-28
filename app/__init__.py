@@ -18,8 +18,8 @@ def create_app():
     login_manager.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
-    from app.api_v1 import api
+    from .api_v1 import api as api_blueprint
+    app.register_blueprint(api_blueprint)
 
-    app.register_blueprint(api)
 
     return app

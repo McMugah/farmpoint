@@ -38,22 +38,27 @@ Login Form
     </style>
 
     <div class="login-container">
-        <h2>Login</h2>
-        <form action="{{url_for('api.login')}}" method="POST">
-              {{ form.csrf_token }}
+        <h2>Create Product</h2>
+        <form action="{{ url_for('api.create_product') }}" method="POST">
+            {{ form.csrf_token }}
             <div class="form-group">
-            {{ form.email.label }}
-            {{ form.email(class="form-control") }}
+               {{ form.name.label }}
+                {{ form.name(class="form-control") }}
             </div>
             <div class="form-group">
-                 {{ form.password.label }}
-                {{ form.password(class="form-control") }}
+                {{ form.price.label }}
+                {{ form.price(class="form-control") }}
             </div>
-            {{ form.submit( class="btn btn-primary btn-login") }}
-            <br>
+            <div class="form-group">
+                {{ form.description.label }}
+                {{ form.description(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.category.label }}
+                {{ form.category(class="form-control") }}
+            </div>
+            {{ form.submit(class="btn btn-primary") }}
+
         </form>
-        <div class="signup-link">
-            Don't have an account? <a href="{{url_for('api.register')}}">Sign Up</a>
-        </div>
     </div>
 {% endblock %}

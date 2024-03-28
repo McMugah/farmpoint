@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+Products page
+{% endblock %}
+
+{% block content %}
+ <style>
+        /* Custom styles */
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            padding-top: 20px;
+        }
+
+        .container {
+            max-width: 800px; /* Limit container width for better readability */
+        }
+
+        .card {
+            margin-bottom: 20px; /* Add some spacing between cards */
+            border: 1px solid rgba(0, 0, 0, 0.125); /* Add border to cards */
+            border-radius: 10px; /* Rounded corners for cards */
+        }
+
+        .card-title {
+            color: #007bff; /* Blue title color */
+            font-size: 24px; /* Larger font size for title */
+            margin-bottom: 0; /* Remove margin below title */
+        }
+
+        .card-text {
+            color: #6c757d; /* Gray text color */
+            font-size: 16px; /* Regular font size for text */
+        }
+    </style>
+    <div class="container">
+        <h1 class="text-center mb-4">Product Details</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text"><strong>ID:</strong> {{ product.id }}</p>
+                <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+                <p class="card-text"><strong>Description:</strong> {{ product.description }}</p>
+                <p class="card-text"><strong>Category:</strong> {{ product.category }}</p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

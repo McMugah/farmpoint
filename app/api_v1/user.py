@@ -2,8 +2,8 @@ from flask import render_template, redirect, url_for, flash, request
 from urllib.parse import urlparse
 
 from flask_login import login_user, current_user, logout_user, login_required
-from ..models import User
-from ..forms.user import UserForm, LoginForm
+from ..models import User, Product
+from ..forms.form import UserForm, LoginForm, ProductForm
 from app import db
 from . import api
 
@@ -46,21 +46,21 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user)
             token = user.generate_token()
-            next_page = urlparse(request.args.get('next'))
+            next_page = request.args.get('next')
+            # Check if next_page is not set or contains a full URL
             if not next_page or urlparse(next_page).netloc != '':
-                next_page = url_for('api.home')  # Use 'api.profile' as the endpoint
+                next_page = url_for('api.home')  # Use 'api.home' as the endpoint
             flash('Login successful!', 'success')
             return redirect(next_page)
         flash('Login unsuccessful. Please check your email and password.', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 
-
-# @api.route('/logout')
-# def logout():
-#     logout_user()
-#     flash('You have been logged out.', 'info')
-#     return redirect(url_for('api.get_homepage'))
+@api.route('/logout')
+def logout():
+    logout_user()
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('api.home'))
 
 
 # @api.route('/profile')
@@ -71,3 +71,6 @@ def login():
 #         return render_template('profile.html', user=current_user)
 #     else:
 #         return "User not found", 404
+
+
+
