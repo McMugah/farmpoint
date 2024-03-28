@@ -1,56 +1,73 @@
-from flask import render_template, redirect, url_for, flash
-from . import api
-from app.models import User
-from app.forms.user import RegistrationForm,LoginForm
+from flask import render_template, redirect, url_for, flash, request
+from urllib.parse import urlparse
+
+from flask_login import login_user, current_user, logout_user, login_required
+from ..models import User
+from ..forms.user import UserForm, LoginForm
 from app import db
-from ..auth import login_required,verify_password
+from . import api
+
+@api.route('/')
+def get_home():
+    return render_template('base.html')
+
+
+@api.route('/home')
+def home():
+    return render_template('home.html')
 
 
 @api.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm()
+    form = UserForm()
     if form.validate_on_submit():
-        # Extract form data
-        username = form.username.data
-        email = form.email.data
-        password = form.password.data
-        contact_number = form.contact_number.data
-        address = form.address.data
-        user_type = form.user_type.data
-
-        # Check if the email is already in use
-        existing_user = User.query.filter_by(email=email).first()
+        existing_user = User.query.filter_by(email=form.email.data).first()
         if existing_user:
-            flash('Email address already registered. Please use a different email.', 'error')
+            flash('Email address is already registered. Please use a different email.', 'danger')
             return redirect(url_for('api.register'))
+        user = User(username=form.username.data,
+                    email=form.email.data)
+        user.set_password(form.password.data)
 
-        # Create a new user
-        new_user = User(username=username, email=email, contact_number=contact_number, address=address, user_type=user_type)
-        new_user.set_password(password)
-
-        # Add the new user to the database
-        db.session.add(new_user)
+        db.session.add(user)
         db.session.commit()
-        # Generate a token for the new user
-        token =  generate_token(new_user)
-        # Flash a success message
-        flash('Registration successful. You can now log in.', 'success')
-        # Redirect the user to the login page
-        return redirect(url_for('api.login'))
-
-    # Render the registration form template for GET requests
+        token = user.generate_token()
+        flash('Your account has been created! You can now log in.', 'success')
+        return redirect(url_for('api.login', token=token))
     return render_template('register.html', form=form)
 
 
-@api.route('/login', methods=['POST', 'GET'])
+
+@api.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
-        if verify_password(email, password):
-            user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user)
             token = user.generate_token()
-            return redirect(url_for('api.get_dashboard', token=token))
-        flash('Invalid email or password', 'error')
-    return render_template('login.html', form=form)
+            next_page = urlparse(request.args.get('next'))
+            if not next_page or urlparse(next_page).netloc != '':
+                next_page = url_for('api.home')  # Use 'api.profile' as the endpoint
+            flash('Login successful!', 'success')
+            return redirect(next_page)
+        flash('Login unsuccessful. Please check your email and password.', 'danger')
+    return render_template('login.html', title='Login', form=form)
+
+
+
+# @api.route('/logout')
+# def logout():
+#     logout_user()
+#     flash('You have been logged out.', 'info')
+#     return redirect(url_for('api.get_homepage'))
+
+
+# @api.route('/profile')
+# @login_required
+# def profile():
+#     user = User.query.get(current_user.id)
+#     if user:
+#         return render_template('profile.html', user=current_user)
+#     else:
+#         return "User not found", 404

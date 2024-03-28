@@ -1,12 +1,13 @@
-from flask import render_template
-from . import api
-from ..auth import login_required
+# from flask import render_template
+# from . import api
+# from ..auth import login_required
+# from app.forms.products import ProductForm
 
 
-@api.route("/products", methods=["GET"])
-@login_required
-def get_products():
-    return render_template("products.html")
+# @api.route("/products", methods=["GET"])
+# @login_required
+# def get_products():
+#     return render_template("products.html")
 
 
 
