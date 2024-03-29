@@ -2,8 +2,8 @@ from flask import render_template, redirect, url_for, flash, request
 from urllib.parse import urlparse
 
 from flask_login import login_user, current_user, logout_user, login_required
-from ..models import User, Product
-from ..forms.form import UserForm, LoginForm, ProductForm
+from ..models import User
+from ..forms.form import RegistrationForm, LoginForm
 from app import db
 from . import api
 
@@ -19,7 +19,7 @@ def home():
 
 @api.route('/register', methods=['GET', 'POST'])
 def register():
-    form = UserForm()
+    form = RegistrationForm()
     if form.validate_on_submit():
         existing_user = User.query.filter_by(email=form.email.data).first()
         if existing_user:
@@ -63,6 +63,12 @@ def logout():
     return redirect(url_for('api.home'))
 
 
+@api.route('/users', methods=['GET'])
+def get_all_users():
+    users = User.query.all()
+    return render_template('users.html', users=users)
+
+
 # @api.route('/profile')
 # @login_required
 # def profile():
@@ -71,6 +77,3 @@ def logout():
 #         return render_template('profile.html', user=current_user)
 #     else:
 #         return "User not found", 404
-
-
-

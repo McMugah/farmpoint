@@ -14,5 +14,16 @@ Admin Page
 <br>
 <a href="{{ url_for('api.get_all_products') }}"> Get All Products</a>
 <br>
-<!-- <a href="{{ url_for('api.delete_product', product_id= 2) }}"> Delete Product</a> -->
+
+<a href="{{ url_for('api.get_all_users') }}"> Get All Users</a>
+<br>
+
+<a href="{{ url_for('api.create_order') }}">Create Order</a>
+<br>
+
+<br>
+<a href="{{ url_for('api.get_all_categories') }}"> Get all Category</a>
+<br>
+<a href="{{ url_for('api.create_category') }}"> Create Category</a>
+
 {% endblock %}

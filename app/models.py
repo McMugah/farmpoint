@@ -77,6 +77,24 @@ class Cart(db.Model):
     # One-to-many relationship with cart items
     items = db.relationship('CartItem', back_populates='cart', cascade='all, delete-orphan')
 
+    def calculate_subtotal(self):
+        return sum(item.product.price * item.quantity for item in self.items)
+
+    def calculate_total_cost(self):
+        return self.calculate_subtotal()
+
+    def update_quantity(self, item_id, quantity):
+        cart_item = CartItem.query.filter_by(cart_id=self.id, product_id=item_id).first()
+        if cart_item:
+            cart_item.quantity = quantity
+            db.session.commit()
+
+    def remove_item(self, item_id):
+        cart_item = CartItem.query.filter_by(cart_id=self.id, product_id=item_id).first()
+        if cart_item:
+            db.session.delete(cart_item)
+            db.session.commit()
+
 class Product(db.Model):
     __tablename__ = 'product'
     id = db.Column(db.Integer, primary_key=True)

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}
+Cart
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Shopping Cart</h2>
+    {% if cart_items %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product_id, quantity in cart_items.items() %}
+            <tr>
+                <td>{{ quantity.product.name }}</td>
+                <td>${{ quantity.product.price }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('api.update_quantity', item_id=quantity.id) }}">
+                        {{quantity.quantity}}
+                        {{form.submit(class="btn btn-sm btn-primary")}}
+                        <!-- <input type="number" name="quantity" value="{{ quantity.quantity }}" min="1">
+                        <button type="submit" class="btn btn-sm btn-primary">Update</button> -->
+                    </form>
+                </td>
+                <td>${{ quantity.product.price * quantity.quantity }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('api.remove_item', item_id=quantity.id) }}">
+                        {{form.submit(class="btn btn-sm btn-danger")}}
+                        <!-- <button type="submit" class="btn btn-sm btn-danger">Remove</button> -->
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3"><strong>Total Cost:</strong></td>
+                <td><strong>${{ total_cost }}</strong></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <form method="POST" action="{{ url_for('api.clear_cart') }}">
+            {{form.submit(lass="btn btn-danger")}}
+
+            <!-- <button type="submit" class="btn btn-danger">Clear Cart</button> -->
+        </form>
+        <a href="{{ url_for('checkout') }}" class="btn btn-success">Proceed to Checkout</a>
+    </div>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -7,7 +7,7 @@
 
     <title>
         {% block title %}
-        Farmers Point 
+        Farmers Point
         {% endblock %}
     </title>
 
@@ -23,8 +23,8 @@
             <li><a href="{{url_for('api.home')}}" class="nav-link px-2 text-white">Home</a></li>
             <li><a href="{{url_for('api.get_all_products')}}" class="nav-link px-2 text-white">Products</a></li>
             {% if current_user.is_authenticated %}
-            <li><a href="#" class="nav-link px-2 text-white">Orders</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Cart</a></li>
+            <li><a href="{{url_for('api.get_all_orders')}}" class="nav-link px-2 text-white">Orders</a></li>
+            <li><a href="{{url_for('api.cart')}}" class="nav-link px-2 text-white">Cart</a></li>
             <li><a href="#" class="nav-link px-2 text-white">Checkout</a></li>
             {% endif %}
         </ul>

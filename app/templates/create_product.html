@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block title %}
-Login Form
+    Create Product
 {% endblock %}
 
 {% block content %}
     <!-- Custom styles -->
     <style>
-        /* Add custom styles specific to the login form here */
-        .login-container {
+        /* Add custom styles specific to the create product form here */
+        .product-container {
             max-width: 400px;
             margin: auto;
             padding: 30px;
@@ -16,7 +16,7 @@ Login Form
             border-radius: 5px;
             margin-top: 50px;
         }
-        .login-container h2 {
+        .product-container h2 {
             text-align: center;
             margin-bottom: 30px;
         }
@@ -26,39 +26,43 @@ Login Form
         .form-control {
             height: 50px;
         }
-        .btn-login {
+        .btn-submit {
             width: 100%;
             padding: 10px 0;
             font-size: 1.2rem;
         }
-        .signup-link {
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 
-    <div class="login-container">
+    <div class="product-container">
         <h2>Create Product</h2>
         <form action="{{ url_for('api.create_product') }}" method="POST">
             {{ form.csrf_token }}
             <div class="form-group">
-               {{ form.name.label }}
-                {{ form.name(class="form-control") }}
+                {{ form.name.label }}
+                {{ form.name(class="form-control", placeholder="Enter product name") }}
             </div>
             <div class="form-group">
                 {{ form.price.label }}
-                {{ form.price(class="form-control") }}
+                {{ form.price(class="form-control", placeholder="Enter product price") }}
             </div>
             <div class="form-group">
                 {{ form.description.label }}
-                {{ form.description(class="form-control") }}
+                {{ form.description(class="form-control", placeholder="Enter product description") }}
             </div>
             <div class="form-group">
-                {{ form.category.label }}
-                {{ form.category(class="form-control") }}
+                {{ form.category_id.label }}
+                {{ form.category_id(class="form-control") }}
             </div>
-            {{ form.submit(class="btn btn-primary") }}
-
+            <!-- Additional fields for creating a new category -->
+            <div class="form-group">
+                {{ category_form.name.label }}
+                {{ category_form.name(class="form-control", placeholder="Enter category name") }}
+            </div>
+            <div class="form-group">
+                {{ category_form.description.label }}
+                {{ category_form.description(class="form-control", placeholder="Enter category description") }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit">Add Product</button>
         </form>
     </div>
 {% endblock %}

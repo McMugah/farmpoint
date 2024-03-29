@@ -7,45 +7,54 @@ Products page
 {% block content %}
 
 <style>
-        /* Custom styles for the Bootstrap cards */
-        .card {
-            border: 1px solid #ddd; /* Add a border */
-            border-radius: 10px; /* Add border radius */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow */
-            transition: box-shadow 0.3s ease; /* Add transition effect for the shadow */
-        }
+    /* Custom styles for the Bootstrap cards */
+    .card {
+        border: 1px solid #ddd; /* Add a border */
+        border-radius: 10px; /* Add border radius */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow */
+        transition: box-shadow 0.3s ease; /* Add transition effect for the shadow */
+    }
 
-        .card:hover {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
-        }
+    .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+    }
 
-        .card-title {
-            font-size: 1.25rem; /* Increase font size for card title */
-            color: #333; /* Set text color */
-        }
+    .card-title {
+        font-size: 1.25rem; /* Increase font size for card title */
+        color: #333; /* Set text color */
+    }
 
-        .card-text {
-            color: #666; /* Set text color */
-        }
-    </style>
+    .card-text {
+        color: #666; /* Set text color */
+    }
+</style>
 
- <div class="container">
-        <h2>Product List</h2>
-        <div class="row">
-            {% for product in products %}
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title" >{{ product.name }}</h5>
-                        <p class="card-text">Price: ${{ product.price }}</p>
-                        <p class="card-text">{{ product.description }}</p>
-                        <p class="card-text">Category: {{ product.category }}</p>
-                    </div>
+<div class="container">
+    <h2>Product List</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">Price: ${{ product.price }}</p>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">Category: {{ product.category }}</p>
+                    <!-- Add to Cart form -->
+                    <form method="POST" action="{{ url_for('api.add_to_cart') }}">
+                        {{ form.csrf_token }}
+                        {{ product.category.label}}
+                        <div class="form-group">
+                                {{ form.quantity.label }}
+                                {{ form.quantity(class="form-control")}}
+                        </div>
+                         {{ form.submit(class="btn btn-primary")}}
+                    </form>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
-
+</div>
 
 {% endblock %}

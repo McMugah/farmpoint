@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create Order
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Create Order</h2>
+    <form method="POST" action="{{ url_for('api.create_order') }}">
+        {{ form.csrf_token }}
+        <div class="form-group">
+             {{ form.product_id.label }}
+            {{ form.product_id(class="form-control", id="product_id") }}
+        </div>
+        <div class="form-group">
+            {{ form.quantity.label }}
+            {{ form.quantity(class="form-control", id="quantity") }}
+        </div>
+        <br>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}
