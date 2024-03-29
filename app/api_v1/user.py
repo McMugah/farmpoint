@@ -1,11 +1,12 @@
 from flask import render_template, redirect, url_for, flash, request
 from urllib.parse import urlparse
-
 from flask_login import login_user, current_user, logout_user, login_required
 from ..models import User
 from ..forms.form import RegistrationForm, LoginForm
 from app import db
 from . import api
+from ..execeptions import ValidationError
+from . import error
 
 @api.route('/')
 def get_home():
@@ -15,7 +16,6 @@ def get_home():
 @api.route('/home')
 def home():
     return render_template('home.html')
-
 
 @api.route('/register', methods=['GET', 'POST'])
 def register():
@@ -31,11 +31,9 @@ def register():
 
         db.session.add(user)
         db.session.commit()
-        token = user.generate_token()
         flash('Your account has been created! You can now log in.', 'success')
-        return redirect(url_for('api.login', token=token))
+        return redirect(url_for('api.login'))
     return render_template('register.html', form=form)
-
 
 
 @api.route('/login', methods=['GET', 'POST'])

@@ -1,7 +1,7 @@
 from datetime import timedelta, datetime
-from . import db, login_manager,bcrypt,jwt
+from . import db, login_manager,bcrypt
 from flask_login import UserMixin
-from flask_jwt_extended import create_access_token
+from app.execeptions import ValidationError
 
 
 # Define the association table for the many-to-many relationship between orders and items
@@ -36,15 +36,15 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'<User {self.username}>'
 
+
+
     def set_password(self, password):
-        self.password_hash = bcrypt.generate_password_hash(password)
+        self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
 
-    def generate_token(self, expiration=3600):
-        token = create_access_token(identity=self.id, expires_delta=timedelta(seconds=expiration))
-        return token
 
     @staticmethod
     @login_manager.user_loader
