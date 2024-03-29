@@ -49,7 +49,7 @@ def login():
             next_page = request.args.get('next')
             # Check if next_page is not set or contains a full URL
             if not next_page or urlparse(next_page).netloc != '':
-                next_page = url_for('api.home')  # Use 'api.home' as the endpoint
+                next_page = url_for('api.get_all_products')  # Use 'api.home' as the endpoint
             flash('Login successful!', 'success')
             return redirect(next_page)
         flash('Login unsuccessful. Please check your email and password.', 'danger')

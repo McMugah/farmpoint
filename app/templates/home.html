@@ -1,116 +1,109 @@
 {% extends "base.html" %}
 
 {% block title %}
-Landing Page
+    Landing Page
 {% endblock %}
 
 {% block content %}
-    <!-- Custom styles -->
+
     <style>
-        /* Add custom styles specific to the landing page here */
-        .hero-section {
-            background-image: url('https://via.placeholder.com/1500x600'); /* Replace with your image */
-            background-size: cover;
-            background-position: center;
-            height: 600px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-        }
-        .hero-section h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        .hero-section p {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-        }
-        .features-section {
-            padding: 50px 0;
-            text-align: center;
-            background-color: #f8f9fa;
-        }
-        .feature-item {
+        .jumbotron {
+    background-image: url('background-image.jpg');
+    background-size: cover;
+    background-color: #67d066; /* Use primary color */
+    color: #ffffff; /* Set text color to white */
+    text-align: center;
+    padding: 150px 0;
+}
+
+
+        .jumbotron h1 {
+            font-size: 3.5rem;
             margin-bottom: 30px;
         }
-        .feature-item i {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: #007bff;
-        }
-        .feature-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .feature-item p {
-            font-size: 1rem;
-            color: #6c757d;
-        }
-        .cta-section {
-            padding: 100px 0;
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-        }
-        .cta-section h2 {
-            font-size: 3rem;
-            margin-bottom: 40px;
-        }
-        .cta-section p {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-        }
-        .btn-cta {
+
+        .jumbotron p {
             font-size: 1.2rem;
-            padding: 10px 30px;
+            margin-bottom: 40px;
+        }
+
+        .btn-get-started {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-get-started:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        .features {
+            background-color: #f8f9fa;
+            padding: 50px 0;
+        }
+
+        .feature-item {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #28a745;
+        }
+
+        .feature-item h3 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-item p {
+            font-size: 1.1rem;
+            color: #666;
         }
     </style>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
+    <!-- Jumbotron -->
+    <div class="jumbotron">
         <div class="container">
-            <h1>Welcome to Farmers Point</h1>
-            <p>This is a simple landing page built with Bootstrap.</p>
+            <h1 class="display-4">Welcome to Farmers Point</h1>
+            <p class="lead">
+                Welcome to Farmers Point – your premier platform connecting farmers directly with consumers. Discover an array of fresh, locally sourced products straight from the farm to your table. Shop confidently knowing you're supporting local farmers while enjoying the highest quality produce. Experience convenience, quality, and community at Farmers Point.
+            </p>
+            <a class="btn btn-primary btn-lg btn-get-started" href="{{ url_for('api.register') }}" role="button">Get Started</a>
         </div>
-    </section>
+    </div>
 
-    <!-- Features Section -->
-    <section class="features-section">
+    <!-- Features -->
+    <div id="features" class="features">
         <div class="container">
+            <h2 class="text-center mb-5">Features</h2>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="feature-item">
-                        <i class="fas fa-cogs"></i>
-                        <h3>Feature 1</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <i class="fas fa-chart-line feature-icon"></i>
+                        <h3>Analytics</h3>
+                        <p>Analytics illuminate the path of your online journey, revealing a landscape of possibilities through data insights. Gain a panoramic view of your website's performance, uncovering the secrets hidden within every click and scroll.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="feature-item">
-                        <i class="fas fa-users"></i>
-                        <h3>Feature 2</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <i class="fas fa-mobile-alt feature-icon"></i>
+                        <h3>Build a Strong Brand</h3>
+                        <p>Our platform provides farmers with the tools and support they need to reach a broader audience, establish trust with consumers, and elevate their brand presence in the market. Join us in celebrating the passion and dedication of farmers while discovering the finest quality products straight from the source. Together, let's grow your brand and cultivate success with Farmers Point.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="feature-item">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Feature 3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <i class="fas fa-lock feature-icon"></i>
+                        <h3>Security</h3>
+                        <p>Ensuring the security of your customers' transactions is our utmost priority. Shop with confidence, knowing that we employ state-of-the-art security measures to protect your sensitive information at every step of the purchasing process. Our website utilizes industry-leading encryption technology to safeguard your personal data, including credit card details and billing information, from unauthorized access.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Call to Action Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to Get Started?</h2>
-            <p>Sign up now to explore more features!</p>
-            <a href="#" class="btn btn-primary btn-cta">Sign Up</a>
-        </div>
-    </section>
 {% endblock %}
