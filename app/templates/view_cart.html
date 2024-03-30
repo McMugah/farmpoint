@@ -5,37 +5,41 @@
 {% endblock %}
 
 {% block content %}
-<div class="container text-center">
-    <h3>My Cart</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Product Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in cart.items %}
+<div class="container">
+    <div class="text-center">
+        <h3>My Cart</h3>
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <td>{{ item.product.name }}</td>
-                    <td>{% if item.price is not none %}KShs: {{ item.price }}{% endif %}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>
-                        {% if item.price is not none and item.quantity is not none %}
-                            KShs: {{ item.price * item.quantity }}
-                        {% else %}
-                            N/A
-                        {% endif %}
-                    </td>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <h3>Total Amount: KShs: {{ total_amount }}/=</h3>
+            </thead>
+            <tbody>
+                {% for item in cart.items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{% if item.price is not none %}KShs: {{ item.price }}{% endif %}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>
+                            {% if item.price is not none and item.quantity is not none %}
+                                KShs: {{ item.price * item.quantity }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3" class="text-end">Total Amount:</td>
+                    <td class="text-center">KShs: {{ total_amount }}/=</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <a href="{{ url_for('api.checkout_from_cart') }}" class="btn btn-primary">Checkout</a>
+    </div>
 </div>
-<br>
-<a href="{{ url_for('api.checkout_from_cart') }}" class="btn btn-primary">Checkout</a>
-
 {% endblock %}

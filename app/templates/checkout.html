@@ -6,9 +6,40 @@ Checkout
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Checkout</h1>
-    <form method="post">
+
+ <style>
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 50px;
+        }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            height: 50px;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 1.2rem;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
+    <div class="login-container">
+        <h2>Checkout</h2>
+        <form action="{{url_for('api.checkout')}}" method="post">
         {{ form.csrf_token }}
         <div class="form-group">
             {{ form.shipping_address.label(class="form-label") }}
@@ -72,5 +103,7 @@ Checkout
             Your order has been placed successfully! Thank you for shopping with us.
         </div>
     {% endif %}
+
+    </div>
 </div>
 {% endblock %}

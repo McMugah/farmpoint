@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+M-Pesa Payment
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>M-Pesa Payment</h3>
+    <p>Please enter your M-Pesa details to proceed with the payment.</p>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.payment_method.label }}
+            <div class="form-check">
+                {% for choice in form.payment_method %}
+                <input class="form-check-input" type="radio" name="{{ form.payment_method.name }}" value="{{ choice.data }}" id="{{ choice.id }}">
+                <label class="form-check-label" for="{{ choice.id }}">{{ choice.label }}</label><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="credit_card_fields" style="display: none;">
+            <div class="form-group">
+                {{ form.credit_card_number.label }}
+                {{ form.credit_card_number(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.expiration_date.label }}
+                {{ form.expiration_date(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.cvv.label }}
+                {{ form.cvv(class="form-control") }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+    </form>
+</div>
+{% endblock %}

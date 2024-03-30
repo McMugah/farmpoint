@@ -11,39 +11,46 @@
         {% endblock %}
     </title>
 
+
+<Style>
+     body {
+    background-color: #ffff;
+}
+</Style>
+
 </head>
 <body>
-    <header class="p-3 bg-primary text-dark">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+    <header class="py-3 bg-secondary text-white">
+    <div class="container d-flex flex-wrap align-items-center justify-content-between">
+        <a href="{{ url_for('api.home') }}" class="d-flex align-items-center text-white text-decoration-none">
             <span class="fw-bold fs-4">Farmers Point</span>
         </a>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <ul class="nav col-auto mb-2 mb-lg-0">
             {% if not current_user.is_authenticated %}
-            <li><a href="{{url_for('api.home')}}" class="nav-link px-2 text-white">Home</a></li>
+            <li><a href="{{ url_for('api.home') }}" class="nav-link px-2 text-white">Home</a></li>
             {% endif %}
-            <li><a href="{{url_for('api.products_list')}}" class="nav-link px-2 text-white">Shop</a></li>
+            <li><a href="{{ url_for('api.products_list') }}" class="nav-link px-2 text-white">Shop</a></li>
             {% if current_user.is_authenticated %}
             <li><a href="#" class="nav-link px-2 text-white">My Orders</a></li>
-            <li><a href="{{url_for('api.view_cart')}}" class="nav-link px-2 text-white">Cart</a></li>
-            <li><a href="{{url_for('api.checkout')}}" class="nav-link px-2 text-white">Checkout</a></li>
+            <li><a href="{{ url_for('api.view_cart') }}" class="nav-link px-2 text-white">Cart</a></li>
             {% endif %}
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-            <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+            <div class="input-group">
+                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+                <button class="btn btn-dark" type="button">Search</button>
+            </div>
         </form>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <ul class="nav col-auto mb-2 mb-lg-0">
             {% if current_user.is_authenticated %}
-            <li><a href="#" class="nav-link px-2 text-white">{{current_user.username}}</a></li>
-            <li><a href="{{url_for('api.logout')}}" class="nav-link px-2 text-white">Logout</a></li>
-            <li><a href="{{url_for('api.admin')}}" class="nav-link px-2 text-white">Admin</a></li>
-
+            <li><a href="#" class="nav-link px-2 text-white">{{ current_user.username }}</a></li>
+            <li><a href="{{ url_for('api.logout') }}" class="nav-link px-2 text-white">Logout</a></li>
             {% else %}
-            <li><a href="{{url_for('api.login')}}" class="nav-link px-2 text-white">Login</a></li>
-            <li><a href="{{url_for('api.register')}}" class="nav-link px-2 text-white">Sign-Up</a></li>
+            <li><a href="{{ url_for('api.login') }}" class="nav-link px-2 text-white">Login</a></li>
+            <li><a href="{{ url_for('api.register') }}" class="nav-link px-2 text-white">Sign-Up</a></li>
             {% endif %}
         </ul>
     </div>
@@ -52,7 +59,7 @@
 <main>
     {% block content %}{% endblock %}
 </main>
-
+<hr>
 <footer class="container py-5">
     <div class="row">
         <div class="col-12 col-md">

@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect
+from flask import flash, redirect, render_template, url_for
 
 from ..models import Product
 from . import api
@@ -7,11 +7,11 @@ from . import api
 # def admin ():
 #     return render_template('admin.html')
 
-@api.route('/admin')
-def admin():
-    # Assuming you have some logic here to fetch the product
-    product = Product.query.first()  # Assuming you want the first product
-    return render_template('admin.html', product=product)
+# @api.route('/admin')
+# def admin():
+#     # Assuming you have some logic here to fetch the product
+#     product = Product.query.first()  # Assuming you want the first product
+#     return render_template('admin.html', product=product)
 
 # @api.route('/admin')
 # def admin():
