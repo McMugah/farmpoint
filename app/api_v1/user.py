@@ -1,22 +1,15 @@
 from urllib.parse import urlparse
-
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
-
 from app import db
-
 from ..execeptions import ValidationError
 from ..forms.form import LoginForm, RegistrationForm
 from ..models import User
 from . import api, error
 
 
+
 @api.route("/")
-def get_home():
-    return render_template("base.html")
-
-
-@api.route("/home")
 def home():
     return render_template("home.html")
 

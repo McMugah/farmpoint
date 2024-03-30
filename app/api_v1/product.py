@@ -1,10 +1,12 @@
 from flask import flash, redirect, render_template, request, url_for
-
 from app import db
-
+from ..decorators.pagination import paginate
 from ..forms.form import CartItemForm, ProductForm
 from ..models import Product
 from . import api
+
+
+
 
 
 # Product Routes

@@ -75,35 +75,53 @@
             <a class="btn btn-primary btn-lg btn-get-started" href="{{ url_for('api.register') }}" role="button">Get Started</a>
         </div>
     </div>
-
-    <!-- Features -->
-    <div id="features" class="features">
-        <div class="container">
-            <h2 class="text-center mb-5">Features</h2>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="feature-item">
-                        <i class="fas fa-chart-line feature-icon"></i>
-                        <h3>Analytics</h3>
-                        <p>Analytics illuminate the path of your online journey, revealing a landscape of possibilities through data insights. Gain a panoramic view of your website's performance, uncovering the secrets hidden within every click and scroll.</p>
+<!-- Features -->
+<div id="features" class="features">
+    <div class="container">
+        <h2 class="text-center mb-5">Features</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4"> <!-- Added mb-4 for vertical margin -->
+                <div class="card text-white bg-success">
+                    <div class="card-header text-center">With Farmers Point</div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Build a Strong Brand</h5>
+                        <p class="card-text">Our platform provides farmers with the tools and support they need to reach a broader audience, establish trust with consumers, and elevate their brand presence in the market. Together, let's grow your brand and cultivate success with Farmers Point.</p>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="feature-item">
-                        <i class="fas fa-mobile-alt feature-icon"></i>
-                        <h3>Build a Strong Brand</h3>
-                        <p>Our platform provides farmers with the tools and support they need to reach a broader audience, establish trust with consumers, and elevate their brand presence in the market. Join us in celebrating the passion and dedication of farmers while discovering the finest quality products straight from the source. Together, let's grow your brand and cultivate success with Farmers Point.</p>
+            </div>
+            <div class="col-md-4 mb-4"> <!-- Added mb-4 for vertical margin -->
+                <div class="card text-white bg-warning">
+                    <div class="card-header text-center">With Farmers Point</div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Your Security Matters</h5>
+                        <p class="card-text">Ensuring the security of your customers' transactions is our utmost priority. Shop with confidence, knowing that we employ state-of-the-art security measures to protect your sensitive information at every step of the purchasing process.</p>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="feature-item">
-                        <i class="fas fa-lock feature-icon"></i>
-                        <h3>Security</h3>
-                        <p>Ensuring the security of your customers' transactions is our utmost priority. Shop with confidence, knowing that we employ state-of-the-art security measures to protect your sensitive information at every step of the purchasing process. Our website utilizes industry-leading encryption technology to safeguard your personal data, including credit card details and billing information, from unauthorized access.</p>
+            </div>
+            <div class="col-md-4 mb-4"> <!-- Added mb-4 for vertical margin -->
+                <div class="card text-white bg-info">
+                    <div class="card-header text-center">With Farmers Point</div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Realtime Analytics</h5>
+                        <p class="card-text">Analytics illuminate the path of your online journey, revealing a landscape of possibilities through data insights. Gain a panoramic view of your website's performance, uncovering the secrets hidden within every click and scroll.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}
