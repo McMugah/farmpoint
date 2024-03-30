@@ -1,76 +1,57 @@
-from flask import render_template, redirect, url_for, flash, request,jsonify
-from urllib.parse import urlparse
-
-from flask_login import login_user, current_user, logout_user, login_required
-from ..models import  Product,Category
-from ..forms.form import ProductForm,CartForm, CategoryForm
+from flask import render_template, redirect, url_for, flash, request
+from ..models import  Product
+from ..forms.form import ProductForm,CartItemForm
 from app import db
 from . import api
 
-@api.route('/products/create', methods=['GET', 'POST'])
+
+# Product Routes
+@api.route('/create_product', methods=['GET', 'POST'])
 def create_product():
     form = ProductForm()
-    category_form = CategoryForm()  # Create an instance of the CategoryForm
-    form.category_id.choices = [(category.id, category.name) for category in Category.query.all()]
-
     if form.validate_on_submit():
-        product = Product(
+        new_product = Product(
             name=form.name.data,
             price=form.price.data,
             description=form.description.data,
-            category_id=form.category_id.data
+            quantity=form.quantity.data
         )
-        db.session.add(product)
+        db.session.add(new_product)
         db.session.commit()
-        return redirect(url_for('api.get_all_products'))
-    return render_template('create_product.html', form=form, category_form=category_form)
+        flash('Product added successfully!', 'success')
+        return redirect(url_for('api.products_list'))
+    return render_template('create_product.html', form=form)
 
-# @api.route('/products', methods=['GET'])
-# def get_all_products():
-#     products = Product.query.all()
-#     product_list = []
-#     for product in products:
-#         product_data = {
-#             'id': product.id,
-#             'name': product.name,
-#             'price': product.price,
-#             'description': product.description,
-#             'category': product.category  # Assuming you have a 'category' attribute in your Product model
-#         }
-#         product_list.append(product_data)
-#     form = CartForm()  # Create an instance of the CartForm
-#     return render_template('products.html', products=product_list, form=form)
 
-@api.route('/products', methods=['GET'])
-def get_all_products():
+@api.route('/products')
+def products_list():
     products = Product.query.all()
-    product_list = []
-    for product in products:
-        product_data = {
-            'id': product.id,
-            'name': product.name,
-            'price': product.price,
-            'description': product.description,
-            'category': product.category.name if product.category else None,  # Access category name through the relationship
-            'category_id': product.category.id if product.category else None  # Access category ID through the relationship
-        }
-        product_list.append(product_data)
-    form = CartForm()  # Create an instance of the CartForm
-    return render_template('products.html', products=product_list, form=form)
+    form = CartItemForm()
+    return render_template('product_list.html', products=products, form=form)
 
 
-
-
-@api.route('/products/<int:product_id>', methods=['GET'])
-def get_product_by_id(product_id):
+@api.route('/update_product/<int:product_id>', methods=['GET', 'POST'])
+def update_product(product_id):
     product = Product.query.get_or_404(product_id)
-    return render_template('productById.html', product=product)
+    form = ProductForm(obj=product)
+    if form.validate_on_submit():
+        form.populate_obj(product)
+        db.session.commit()
+        flash('Product updated successfully!', 'success')
+        return redirect(url_for('api.products_list'))
+    return render_template('update_product.html', form=form, product=product)
 
 
-
-@api.route('/products/<int:product_id>', methods=['DELETE'])
+@api.route('/delete_product/<int:product_id>', methods=['POST'])
 def delete_product(product_id):
     product = Product.query.get_or_404(product_id)
     db.session.delete(product)
     db.session.commit()
-    return jsonify({'message': 'Product deleted successfully'})
+    flash('Product deleted successfully!', 'success')
+    return redirect(url_for('api.products_list'))
+
+
+@api.route('/product/<int:product_id>')
+def get_product(product_id):
+    product = Product.query.get_or_404(product_id)
+    return render_template('product.html', product=product)

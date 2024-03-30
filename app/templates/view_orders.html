@@ -1,0 +1,28 @@
+<!-- order.html -->
+{% extends 'base.html' %}
+
+{% block title %}Orders - Farmers Point{% endblock %}
+
+{% block content %}
+<h3>My Orders</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>User ID</th>
+            <th>Product ID</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ order.user_id }}</td>
+            <td>{{ order.product_id }}</td>
+            <td>{{ order.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

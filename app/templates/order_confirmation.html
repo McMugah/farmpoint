@@ -1,0 +1,32 @@
+<!-- order_confirmation.html -->
+
+{% extends "base.html" %}
+{% block title %}Confirm Order{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Confirm Order</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Order Confirmation Form -->
+            <form method="post">
+                {{ confirmation_form.csrf_token }}
+                <!-- Add fields or content for order confirmation here -->
+                <button type="submit" class="btn btn-primary">Confirm Order</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <!-- Order Status Update Form -->
+            <form method="post">
+                {{ order_form.csrf_token }}
+                <!-- Add fields or content for order status update here -->
+                <div class="form-group">
+                    {{ order_form.status.label }}
+                    {{ order_form.status(class="form-control") }}
+                </div>
+                <button type="submit" class="btn btn-primary">Update Status</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

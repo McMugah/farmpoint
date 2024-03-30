@@ -17,6 +17,7 @@ def get_home():
 def home():
     return render_template('home.html')
 
+
 @api.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -43,11 +44,9 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
-            token = user.generate_token()
             next_page = request.args.get('next')
-            # Check if next_page is not set or contains a full URL
             if not next_page or urlparse(next_page).netloc != '':
-                next_page = url_for('api.get_all_products')  # Use 'api.home' as the endpoint
+                next_page = url_for('api.products_list')
             flash('Login successful!', 'success')
             return redirect(next_page)
         flash('Login unsuccessful. Please check your email and password.', 'danger')

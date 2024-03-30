@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update Product
+{% endblock %}
+
+{% block content %}
+ <h1>Update Product</h1>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.name.label }}<br>
+        {{ form.name(size=50) }}<br>
+        {{ form.price.label }}<br>
+        {{ form.price }}<br>
+        {{ form.description.label }}<br>
+        {{ form.description(cols=50, rows=5) }}<br>
+        {{ form.quantity.label }}<br>
+        {{ form.quantity(size=10) }}<br>
+        {{ form.submit() }}
+    </form>
+
+{% endblock %}

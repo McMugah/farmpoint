@@ -20,12 +20,14 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            {% if not current_user.is_authenticated %}
             <li><a href="{{url_for('api.home')}}" class="nav-link px-2 text-white">Home</a></li>
-            <li><a href="{{url_for('api.get_all_products')}}" class="nav-link px-2 text-white">Products</a></li>
+            {% endif %}
+            <li><a href="{{url_for('api.products_list')}}" class="nav-link px-2 text-white">Shop</a></li>
             {% if current_user.is_authenticated %}
-            <li><a href="{{url_for('api.get_all_orders')}}" class="nav-link px-2 text-white">Orders</a></li>
-            <li><a href="{{url_for('api.cart')}}" class="nav-link px-2 text-white">Cart</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Checkout</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">My Orders</a></li>
+            <li><a href="{{url_for('api.view_cart')}}" class="nav-link px-2 text-white">Cart</a></li>
+            <li><a href="{{url_for('api.checkout')}}" class="nav-link px-2 text-white">Checkout</a></li>
             {% endif %}
         </ul>
 
@@ -35,7 +37,7 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             {% if current_user.is_authenticated %}
-             <li><a href="#" class="nav-link px-2 text-white">{{current_user.username}}</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">{{current_user.username}}</a></li>
             <li><a href="{{url_for('api.logout')}}" class="nav-link px-2 text-white">Logout</a></li>
             <li><a href="{{url_for('api.admin')}}" class="nav-link px-2 text-white">Admin</a></li>
 
@@ -46,8 +48,6 @@
         </ul>
     </div>
 </header>
-
-
 
 <main>
     {% block content %}{% endblock %}

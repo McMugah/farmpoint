@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, DecimalField, IntegerField,BooleanField,FloatField,SelectField
-from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, NumberRange
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, DecimalField, IntegerField,BooleanField,FloatField,HiddenField,SelectField, DateField,RadioField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, NumberRange,InputRequired
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
@@ -20,47 +21,54 @@ class UpdateAccountForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Update')
 
-class OrderForm(FlaskForm):
-    product_id = IntegerField('Product ID', validators=[DataRequired()])
-    quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=1)])
-    submit = SubmitField('Place Order')
-
-class PaymentForm(FlaskForm):
-    card_number = StringField('Card Number', validators=[DataRequired(), Length(min=16, max=16)])
-    expiration_date = StringField('Expiration Date (MM/YY)', validators=[DataRequired(), Length(min=5, max=5)])
-    cvv = StringField('CVV', validators=[DataRequired(), Length(min=3, max=4)])
-    submit = SubmitField('Submit Payment')
-
-
-class CheckoutForm(FlaskForm):
-    submit_order = SubmitField('Submit Order')
-    submit_payment = SubmitField('Submit Payment')
 
 class ProductForm(FlaskForm):
-    name = StringField('Product Name', validators=[DataRequired()])
-    price = DecimalField('Price per Kg in Kshs', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
-    category_id = SelectField('Category', coerce=int, validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired(), Length(max=100)])
+    price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0)])
+    description = TextAreaField('Description')
+    quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=0)])
     submit = SubmitField('Add Product')
 
 
-class CartForm(FlaskForm):
-    product_id = IntegerField('Product ID', validators=[DataRequired()])
+class OrderForm(FlaskForm):
+    status_choices = [('Pending', 'Pending'), ('Processing', 'Processing'), ('Completed', 'Completed')]
+    status = SelectField('Status', choices=status_choices, validators=[DataRequired()])
+    submit = SubmitField('Update Status')
+
+class OrderConfirmationForm(FlaskForm):
+    confirm_order = SubmitField('Confirm Order')
+
+
+class OrderItemForm(FlaskForm):
     quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=1)])
-    submit = SubmitField('Add to Cart')
+    submit = SubmitField('Add to Order')
 
 
-class ItemForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=100)])
-    price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0.01)])
-    description = TextAreaField('Description')
-
-class CategoryForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(max=50)])
-    description = TextAreaField('Description')
-    submit = SubmitField('Add to Category')
+class CartItemForm(FlaskForm):
+    quantity = IntegerField('Quantity', validators=[InputRequired(), NumberRange(min=1)])
+    submit = SubmitField('Add/Update Item')
 
 
+# Updatating Cart
 class UpdateQuantityForm(FlaskForm):
-    quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=1)])
+    quantity = IntegerField('Quantity', validators=[InputRequired(), NumberRange(min=1)])
     submit = SubmitField('Update Quantity')
+
+class RemoveItemForm(FlaskForm):
+    submit = SubmitField('Remove Item')
+
+
+class CheckoutForm(FlaskForm):
+    shipping_address = StringField('Shipping Address', validators=[DataRequired()])
+    payment_method = SelectField('Payment Method', validators=[DataRequired()])
+    credit_card_number = StringField('Credit Card Number', validators=[DataRequired(), Length(min=16, max=16, message='Credit card number must be 16 digits long')])
+    expiration_date = StringField('Expiration Date', validators=[DataRequired(), Length(min=5, max=5, message='Invalid expiration date format')])
+    cvv = StringField('CVV', validators=[DataRequired(), Length(min=3, max=3, message='CVV must be 3 digits long')])
+    submit = SubmitField('Proceed to Payment')
+
+
+    def __init__(self, *args, **kwargs):
+        super(CheckoutForm, self).__init__(*args, **kwargs)
+        payment_methods = kwargs.get('payment_methods', [])
+        self.payment_method.choices = [(method, method.capitalize()) for method in payment_methods]
+
