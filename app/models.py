@@ -121,6 +121,7 @@ class OrderItem(db.Model):
 
     order = db.relationship("Order", back_populates="items")
     product = db.relationship("Product", back_populates="order_items")
+   
 
     def __repr__(self):
         return f"<OrderItem {self.id}>"

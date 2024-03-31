@@ -7,14 +7,10 @@ from wtforms.validators import (DataRequired, Email, EqualTo, InputRequired,
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField(
-        "Username", validators=[DataRequired(), Length(min=2, max=20)]
-    )
+    username = StringField("Username", validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
-    confirm_password = PasswordField(
-        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
-    )
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField("Sign Up")
 
 
@@ -26,9 +22,7 @@ class LoginForm(FlaskForm):
 
 
 class UpdateAccountForm(FlaskForm):
-    username = StringField(
-        "Username", validators=[DataRequired(), Length(min=2, max=20)]
-    )
+    username = StringField("Username", validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField("Email", validators=[DataRequired(), Email()])
     submit = SubmitField("Update")
 
@@ -42,11 +36,7 @@ class ProductForm(FlaskForm):
 
 
 class OrderForm(FlaskForm):
-    status_choices = [
-        ("Pending", "Pending"),
-        ("Processing", "Processing"),
-        ("Completed", "Completed"),
-    ]
+    status_choices = [("Pending", "Pending"),("Processing", "Processing"),("Completed", "Completed"),]
     status = SelectField("Status", choices=status_choices, validators=[DataRequired()])
     submit = SubmitField("Update Status")
 
@@ -61,17 +51,13 @@ class OrderItemForm(FlaskForm):
 
 
 class CartItemForm(FlaskForm):
-    quantity = IntegerField(
-        "Quantity", validators=[InputRequired(), NumberRange(min=1)]
-    )
+    quantity = IntegerField("Quantity", validators=[InputRequired(), NumberRange(min=1)])
     submit = SubmitField("Add/Update Item")
 
 
 # Updatating Cart
 class UpdateQuantityForm(FlaskForm):
-    quantity = IntegerField(
-        "Quantity", validators=[InputRequired(), NumberRange(min=1)]
-    )
+    quantity = IntegerField("Quantity", validators=[InputRequired(), NumberRange(min=1)])
     submit = SubmitField("Update Quantity")
 
 
@@ -82,27 +68,9 @@ class RemoveItemForm(FlaskForm):
 class CheckoutForm(FlaskForm):
     shipping_address = StringField("Shipping Address", validators=[DataRequired()])
     payment_method = SelectField("Payment Method", validators=[DataRequired()])
-    credit_card_number = StringField(
-        "Credit Card Number",
-        validators=[
-            DataRequired(),
-            Length(min=16, max=16, message="Credit card number must be 16 digits long"),
-        ],
-    )
-    expiration_date = StringField(
-        "Expiration Date",
-        validators=[
-            DataRequired(),
-            Length(min=5, max=5, message="Invalid expiration date format"),
-        ],
-    )
-    cvv = StringField(
-        "CVV",
-        validators=[
-            DataRequired(),
-            Length(min=3, max=3, message="CVV must be 3 digits long"),
-        ],
-    )
+    credit_card_number = StringField("Credit Card Number",validators=[DataRequired(),Length(min=16, max=16, message="Credit card number must be 16 digits long"),],)
+    expiration_date = StringField("Expiration Date",validators=[DataRequired(),Length(min=5, max=5, message="Invalid expiration date format"),],)
+    cvv = StringField("CVV",validators=[DataRequired(),Length(min=3, max=3, message="CVV must be 3 digits long"),],)
     submit = SubmitField("Proceed to Payment")
 
     def __init__(self, *args, **kwargs):
